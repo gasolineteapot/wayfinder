@@ -1,8 +1,3 @@
-#include <iostream>
-#include <cmath>
-#include "header.h"
-
-
 double degreeToRad(double degree) {
     return degree * M_PI / 180.0;
 }
