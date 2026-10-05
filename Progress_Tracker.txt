@@ -1,0 +1,4 @@
+-Progress Tracker-
+
+10/05/2026
+Hunter - Made some changes to the order of the code. Put in more libraries for the compass. Made a main and a loop setup. 
