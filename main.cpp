@@ -2,7 +2,7 @@
 #include <iostream> //Main setup
 #include <cmath> //Math library for calculations
 #include "header.h" //Including a header
-#include <FS.h> //Basic file inclusion library
+#include "FS.h" //Basic file inclusion library
 //Compass Libraries
 #include <Adafruit_BNO055.h> //Library for the main compass. It recieves vectors from the compass of the direction relative to absolute north
 #include <Adafruit_Sensor.h> //Base library for adafruit sensors
@@ -33,5 +33,12 @@ void loop() //Main body of the code
 //Extra Functions to implement in the code
 void readBusData()//Function to read the bus data
 {
-    
+    File busRoutes = LittleFS.open("/BusStops_Active.csv", "r"); //Defines the file and opens it to read only
+    if(!busRoutes) //If there are any problems with reading the file
+    {
+        Serial.println("Failed to retrieve file contents"); 
+        return; //Exit safely
+    }
 }
+
+
