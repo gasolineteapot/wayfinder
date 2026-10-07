@@ -1,5 +1,4 @@
 //Functions for Wayfinder
-
 double degreeToRad(double degree) { //Convert Radians to Degrees
     return degree * M_PI / 180.0;
 }
@@ -23,12 +22,8 @@ double haversineDistance(double lat1, double lon1, double lat2, double lon2) //C
     return radius * c;
 }
 
-double angleFrom(double lat1, double lon1, double lat2, double lon2)
-{
-    
-}
 
-double[2] centralAngleBetween(double lat1, double lon1, double lat2, double lon2) //Central angle from one position(lat1,lon1) to another(lat2,lon2) on a sphere
+double centralAngleBetween(double lat1, double lon1, double lat2, double lon2) //Central angle from one position(lat1,lon1) to another(lat2,lon2) on a sphere
 {
     //Assume latitude and longitude are in Degrees, convert to radians
     lat1 = degreeToRad(lat1);
@@ -38,6 +33,6 @@ double[2] centralAngleBetween(double lat1, double lon1, double lat2, double lon2
     
     dLat = std::arccos(std::cos(lat1)*std::cos(lat2)+std::sin(lat1)*std::sin(lat2)*std::cos(lon1-lon2)); //lat
     dLon = std::abs(lon1-lon2);
-    double angle[2] = {dLat, dLon};
+    
     return angle;
 }
