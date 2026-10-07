@@ -23,7 +23,7 @@ double haversineDistance(double lat1, double lon1, double lat2, double lon2) //C
     return radius * c;
 }
 
-double angleToPosition(double lat1, double lon1, double lat2, double lon2) //Angle from one position(lat1,lon1) to another(lat2,lon2)
+double centralAngleBetween(double lat1, double lon1, double lat2, double lon2) //Central angle from one position(lat1,lon1) to another(lat2,lon2) on a sphere
 {
     //Assume latitude and longitude are in Degrees, convert to radians
     lat1 = degreeToRad(lat1);
