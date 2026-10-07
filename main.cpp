@@ -29,3 +29,9 @@ void loop() //Main body of the code
 {
 
 }
+
+//Extra Functions to implement in the code
+void readBusData()//Function to read the bus data
+{
+    
+}
