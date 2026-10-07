@@ -32,7 +32,8 @@ double centralAngleBetween(double lat1, double lon1, double lat2, double lon2) /
     lon2 = degreeToRad(lon2);
     
     dLat = std::arccos(std::cos(lat1)*std::cos(lat2)+std::sin(lat1)*std::sin(lat2)*std::cos(lon1-lon2)); //lat
-    dLon = std::abs(lon1-lon2);
-    
+    dLon = std::abs(lon1-lon2); //lon
+
+    //Function is not complete try to return both lat and lon
     return angle;
 }
