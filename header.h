@@ -2,7 +2,8 @@ double degreeToRad(double degree) {
     return degree * M_PI / 180.0;
 }
 
-double haversineDistance(double lat1, double lon1, double lat2, double lon2) {
+double haversineDistance(double lat1, double lon1, double lat2, double lon2) 
+{
     double dLat = degreeToRad(lat2 - lat1);
     double dLon = degreeToRad(lon2 - lon1);
 
