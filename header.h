@@ -1,8 +1,10 @@
+//Functions for Wayfinder
+
 double degreeToRad(double degree) { //Convert Radians to Degrees
     return degree * M_PI / 180.0;
 }
 
-double haversineDistance(double lat1, double lon1, double lat2, double lon2) //Calculate distance on a sphere from point (lat1,lon1) to (lat2,lon2) using Haversine formula
+double haversineDistance(double lat1, double lon1, double lat2, double lon2) //Calculate distance on a sphere from point (lat1,lon1) to (lat2,lon2) using Haversine formula 
 {
     double dLat = degreeToRad(lat2 - lat1);
     double dLon = degreeToRad(lon2 - lon1); 
@@ -16,4 +18,15 @@ double haversineDistance(double lat1, double lon1, double lat2, double lon2) //C
     
     double radius = 6371.0; 
     return radius * c;
+}
+
+double angleToPosition(double lat1, double lon1, double lat2, double lon2) //Angle from one position(lat1,lon1) to another(lat2,lon2)
+{
+    //Assume latitude and longitude are in Degrees, convert to radians
+    lat1 = degreeToRad(lat1);
+    lat2 = degreeToRad(lat2);
+    lon1 = degreeToRad(lon1);
+    lon2 = degreeToRad(lon2);
+    
+    return std::arccos(std::cos(lat1)*std::cos(lat2)+std::sin(lat1)*std::sin(lat2)*std::cos(lon1-lon2));
 }
