@@ -2,6 +2,7 @@
 
 10/05/2026
 Hunter(main)- Made some changes to the order of the code. Put in more libraries for the compass. Made a main and a loop setup. 
+
 10/07/2026
 Killian(main)-Remove main function unneeded, Add comments to header file(Labels for haversine, deg2rad)
-Hunter(main) -Added the rest of the libraries
+Hunter(main) -Added the rest of the libraries, started on a function to read the bus route data
