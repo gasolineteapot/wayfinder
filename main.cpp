@@ -1,4 +1,4 @@
-//Basic Libraries
+//-------------------------Libraries-------------------------
 #include <iostream> //Main setup
 #include <cmath> //Math library for calculations
 #include "header.h" //Including a header
@@ -20,6 +20,9 @@
 #include <Arduino.h> //Basic Arduino Library for all the arduino commands
 
 
+//-------------------------Main-------------------------
+
+
 void setup() //Initialization for the code. Defining Variables
 {
     
@@ -30,7 +33,28 @@ void loop() //Main body of the code
 
 }
 
-//Extra Functions to implement in the code
+
+//-------------------------Extra Functions to implement in the code-------------------------
+
+
+double getLatitude() //Function to get the users current position in latitude
+{
+
+}
+double getLongitude() //Function to get the users current positon in longitude
+{
+
+}
+
+double compareLatitude(double latitude) //Function to compare the busRoute distances and find the closest route to the user - returns the closest latitude
+{
+    
+}
+double compareLongitude(double longitude) //Function to compare the busRoute distances and find the closest route to the user - returns the closest longitude
+{
+
+}
+
 void readBusData()//Function to read the bus data
 {
     File busRoutes = LittleFS.open("/BusStops_Active.csv", "r"); //Defines the file and opens it to read only
@@ -39,10 +63,8 @@ void readBusData()//Function to read the bus data
         Serial.println("Failed to retrieve file contents"); 
         return; //Exit safely
     }
-    double baseLat = ; //Variable to store latitude that is baesd off the users current position
-    double baseLong = ; //Variable to store longitude that is based off the users current position
 
-    while(busRoutes.available()) //While the file is open and being read
+    while(busRoutes.available()) //While the file is open and being read - continuously reads the file until there is nothing left to read
     {
         String lineLat = busRoutes.readStringUntil(","); //Reads the line for latitude until there is a comma seperating them
         String lineLong = busRoutes.readStringUntil('\n'); //Reads the line for longitude until there is a line break seperating them
@@ -51,11 +73,6 @@ void readBusData()//Function to read the bus data
 
         double readLat = lineLat.toDouble(); //Converts the latitude (which was originaly a string) to a double
         double readLong = lineLong.toDouble(); //Converts the longitude (which was originally a string) to a double
-        if(readLat < baseLat)
-        {
-            baseLat = read
-        }
     }
 }
-
 
