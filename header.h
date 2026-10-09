@@ -3,14 +3,14 @@ const double rad_Earth_Boulder = 6370964.362946211;
 
 
 //Functions for Wayfinder
-double degreeToRad(double rad) //Convert Degrees to Radians
+double degreeToRad(double degree) //Convert Degrees to Radians
 { 
-    return rad * M_PI / 180.0;
+    return degree * M_PI / 180.0;
 }
 
-double radToDegree(double degree) //Convert Radian to Degrees
+double radToDegree(double rad) //Convert Radian to Degrees
 { 
-    return degree * 180.0 / M_PI;
+    return rad * 180.0 / M_PI;
 }
 
 double haversineDistance(double lat1, double lon1, double lat2, double lon2) //Calculate distance on a sphere from point (lat1,lon1) to (lat2,lon2) using Haversine formula 
