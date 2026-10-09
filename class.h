@@ -41,6 +41,7 @@ double readBusData()//Function to read the bus data and returns the closest dist
         return; //Exit safely
     }
 
+    int i = 0;
     double dist = 0.0; //Declaration of the distance
     double userLat = getLatitude(); //From the previous function - gets the users latitude
     double userLng = getLongitude(); //From the previous function - gets the users longitude
@@ -60,6 +61,7 @@ double readBusData()//Function to read the bus data and returns the closest dist
         {
             closestDistance = dist; 
         }
+        i++;
     }
     return dist;
 }
