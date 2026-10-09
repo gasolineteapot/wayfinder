@@ -55,6 +55,7 @@ double centralAngleBetweenLat(double lat1, double lon1, double lat2, double lon2
 
 double angleBetweenTwoOnSurface(double lat1, double lon1, double lat2, double lon2, double radius) //Imagining the central angle projecting dX and dY onto the surface of a sphere as a triangle, this is the upper angle near the dY side 
 {
-    
-    return std::atan((std::sin(centralAngleBetweenLat(lat1,lon1,lat2,lon2))*radius)/(std::sin(centralAngleBetweenLon(lat1,lon1,lat2,lon2))*radius));
+    dLat = degreeToRad(lat1-lat2); //change in angle from lat to lat
+    dLon = degreeToRad(lon1-lon2); //change in angle from lon to lon
+    return std::atan((std::sin(dLat)*radius)/(std::sin(dLon)*radius)); 
 }
