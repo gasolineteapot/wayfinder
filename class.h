@@ -31,17 +31,8 @@ double getLongitude() //Function to get the users current positon in longitude
     return currentLng; //Returns the current longitude of the user
 }
 
-double compareLatitude(double lat) //Function to compare the busRoute distances and find the closest route to the user - returns the closest latitude
-{
-    
-}
 
-double compareLongitude(double lng) //Function to compare the busRoute distances and find the closest route to the user - returns the closest longitude
-{
-
-}
-
-double readBusDataLAT()//Function to read the bus data
+double readBusData()//Function to read the bus data and returns the closest distance
 {
     File busRoutes = LittleFS.open("/BusStops_Active.csv", "r"); //Defines the file and opens it to read only
     if(!busRoutes) //If there are any problems with reading the file
@@ -50,14 +41,26 @@ double readBusDataLAT()//Function to read the bus data
         return; //Exit safely
     }
 
+    double dist = 0.0; //Declaration of the distance
+    double userLat = getLatitude(); //From the previous function - gets the users latitude
+    double userLng = getLongitude(); //From the previous function - gets the users longitude
+    double closestDistance = INT_MAX; //Value to compare the distance
     while(busRoutes.available()) //While the file is open and being read - continuously reads the file until there is nothing left to read
     {
         String lineLat = busRoutes.readStringUntil(","); //Reads the line for latitude until there is a comma seperating them
         String lineLong = busRoutes.readStringUntil('\n'); //Reads the line for longitude until there is a line break seperating them
-        lineLatitude.trim(); //Removes any unecessary white space
-        lineLongitude.trim(); //Removes any unecessary white space
+        lineLat.trim(); //Removes any unecessary white space
+        lineLong.trim(); //Removes any unecessary white space
 
         double readLat = lineLat.toDouble(); //Converts the latitude (which was originaly a string) to a double
         double readLong = lineLong.toDouble(); //Converts the longitude (which was originally a string) to a double
+
+        double dist = haversineDistance(userLat, userLng, readLat, readLong); //Calculates the absolute distance between the two points
+        if(dist < closestDistance) //If statement to find the closest distance
+        {
+            closestDistance = dist; 
+        }
     }
+    return dist;
 }
+
