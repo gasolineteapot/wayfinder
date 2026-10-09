@@ -1,3 +1,6 @@
+//useful constants for program
+const double RAD_EARTH_BOULDER = 6370964.362946211;
+
 
 //Functions for Wayfinder
 double degreeToRad(double degree) { //Convert Degrees to Radians
