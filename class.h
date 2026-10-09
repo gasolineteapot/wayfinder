@@ -32,7 +32,7 @@ double getLongitude() //Function to get the users current positon in longitude
 }
 
 
-double readBusData()//Function to read the bus data and returns the closest distance
+int readBusData()//Function to read the bus data and returns the closest distance
 {
     File busRoutes = LittleFS.open("/BusStops_Active.csv", "r"); //Defines the file and opens it to read only
     if(!busRoutes) //If there are any problems with reading the file
@@ -41,7 +41,8 @@ double readBusData()//Function to read the bus data and returns the closest dist
         return; //Exit safely
     }
 
-    int i = 0;
+    int i = 0; //Integer to count the number of loops the code reads through
+    int k = 0; //Integer to assign the index of the closest latitude and longitude
     double dist = 0.0; //Declaration of the distance
     double userLat = getLatitude(); //From the previous function - gets the users latitude
     double userLng = getLongitude(); //From the previous function - gets the users longitude
@@ -60,9 +61,10 @@ double readBusData()//Function to read the bus data and returns the closest dist
         if(dist < closestDistance) //If statement to find the closest distance
         {
             closestDistance = dist; 
+            k = i;
         }
         i++;
     }
-    return dist;
+    return k;
 }
 
