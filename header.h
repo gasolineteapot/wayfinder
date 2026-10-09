@@ -27,7 +27,7 @@ double haversineDistance(double lat1, double lon1, double lat2, double lon2) //C
     double a = std::sin(dLat / 2.0) * std::sin(dLat / 2.0) + std::cos(lat1) * std::cos(lat2) * std::sin(dLon / 2.0) * std::sin(dLon / 2.0);
     double c = 2.0 * std::atan2(std::sqrt(a), std::sqrt(1.0 - a));
     
-    return rad_Earth_Boulder * c;
+    return std::abs(rad_Earth_Boulder * c);
 }
 
 double centralAngleBetweenLon(double lat1, double lon1, double lat2, double lon2) //Longitude of angle from one position(lat1,lon1) to another(lat2,lon2) on a sphere
@@ -53,8 +53,8 @@ double centralAngleBetweenLat(double lat1, double lon1, double lat2, double lon2
     return dLat;
 }
 
-double angleBetweenTwoOnSurface(double lat1, double lon1, double lat2, double lon2, double radius){ //Imagining the central angle projecting dX and dY onto the surface of a sphere as a triangle, this is the upper angle near the dY side 
-    //user lat/lon are on top 
+double angleBetweenTwoOnSurface(double lat1, double lon1, double lat2, double lon2, double radius) //Imagining the central angle projecting dX and dY onto the surface of a sphere as a triangle, this is the upper angle near the dY side 
+{
     
     return std::atan((std::sin(centralAngleBetweenLat(lat1,lon1,lat2,lon2))*radius)/(std::sin(centralAngleBetweenLon(lat1,lon1,lat2,lon2))*radius));
 }
