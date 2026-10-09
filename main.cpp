@@ -82,7 +82,7 @@ double compareLongitude(double lng) //Function to compare the busRoute distances
 
 }
 
-void readBusData()//Function to read the bus data
+double readBusDataLAT()//Function to read the bus data
 {
     File busRoutes = LittleFS.open("/BusStops_Active.csv", "r"); //Defines the file and opens it to read only
     if(!busRoutes) //If there are any problems with reading the file
