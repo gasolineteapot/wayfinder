@@ -10,3 +10,4 @@ Hunter(main) -Added the rest of the libraries, started on a function to read the
 
 10/08/2026
 Killian(header) - Progress on functions for calculating angle between 2 points
+Hunter(main) - Started functions to compare the latitude and longitude of the user to the closest stop. Made functions getting the users current location in latitude and longitude. Made some style changes and comments for comprehension. 
