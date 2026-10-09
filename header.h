@@ -27,9 +27,7 @@ double haversineDistance(double lat1, double lon1, double lat2, double lon2) //C
     double a = std::sin(dLat / 2.0) * std::sin(dLat / 2.0) + std::cos(lat1) * std::cos(lat2) * std::sin(dLon / 2.0) * std::sin(dLon / 2.0);
     double c = 2.0 * std::atan2(std::sqrt(a), std::sqrt(1.0 - a));
     
-    
-    double radius = 6371.0; 
-    return radius * c;
+    return rad_Earth_Boulder * c;
 }
 
 double centralAngleBetweenLon(double lat1, double lon1, double lat2, double lon2) //Longitude of angle from one position(lat1,lon1) to another(lat2,lon2) on a sphere
