@@ -15,7 +15,6 @@ double radToDegree(double rad) //Convert Radian to Degrees
 
 double haversineDistance(double lat1, double lon1, double lat2, double lon2) //Calculate distance on a sphere from point (lat1,lon1) to (lat2,lon2) using Haversine formula 
 {
-    
     //Assume latitude and longitude are in Degrees, delta Latitude and Longitude converted to Radians
     double dLat = degreeToRad(lat2 - lat1);
     double dLon = degreeToRad(lon2 - lon1); 
