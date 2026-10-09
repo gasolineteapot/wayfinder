@@ -32,7 +32,7 @@ double getLongitude() //Function to get the users current positon in longitude
 }
 
 
-int readBusData()//Function to read the bus data and returns the closest distance
+int readBusData()//Function to read the bus data and returns the closest index of latitude and longitude
 {
     File busRoutes = LittleFS.open("/BusStops_Active.csv", "r"); //Defines the file and opens it to read only
     if(!busRoutes) //If there are any problems with reading the file
