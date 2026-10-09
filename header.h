@@ -22,8 +22,11 @@ double haversineDistance(double lat1, double lon1, double lat2, double lon2) //C
     return radius * c;
 }
 
+double angleBetweenTwoOnSurface(double lat1, double lon1, double lat2, double lon2){ //Imagining the central angle projecting dX and dY onto the surface of a sphere as a triangle, this is the upper angle near the dY side 
+    return std::atan((std::sin(centralAngleBetweenLat(lat1,lon1,lat2,lon2))*radius)/(std::sin(centralAngleBetweenLon(lat1,lon1,lat2,lon2))*radius));
+}
 
-double centralAngleBetweenLon(double lat1, double lon1, double lat2, double lon2) //Central angle from one position(lat1,lon1) to another(lat2,lon2) on a sphere
+double centralAngleBetweenLon(double lat1, double lon1, double lat2, double lon2) //Longitude of angle from one position(lat1,lon1) to another(lat2,lon2) on a sphere
 {
     //Assume latitude and longitude are in Degrees, convert to radians
     lon1 = degreeToRad(lon1);
@@ -34,7 +37,7 @@ double centralAngleBetweenLon(double lat1, double lon1, double lat2, double lon2
     return dLon;
 }
 
-double centralAngleBetweenLat(double lat1, double lon1, double lat2, double lon2)
+double centralAngleBetweenLat(double lat1, double lon1, double lat2, double lon2)  //Latidinual of angle from one position(lat1,lon1) to another(lat2,lon2) on a sphere
 {
     //Assume latitude and longitude are in Degrees, convert to radians
     lat1 = degreeToRad(lat1);
