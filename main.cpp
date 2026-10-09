@@ -23,6 +23,9 @@
 //-------------------------Main-------------------------
 
 
+TinyGPSPlus gps; //Initializes and defines the gps
+HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
+
 void setup() //Initialization for the code. Defining Variables
 {
     
@@ -39,18 +42,42 @@ void loop() //Main body of the code
 
 double getLatitude() //Function to get the users current position in latitude
 {
-
+    while(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
+        {
+            gps.encode(gps.read()); //The read function reads the gps's characters while the encode function translates it to actual tangible data
+        }
+    if(gps.location.isUpdated() && gps.location.isValid())  
+    {
+        double currentLat = gps.location.lat(); //Obtains the users current latitude based off the gps's location
+    }
+    //The isUpdated method checks to make sure the gps is updated to the users current location. 
+    //The isValid method checks to make sure the the gps is able to find a satelite to read off of.
+    
+    return currentLat; //Returns the current latitude of the user
 }
+
 double getLongitude() //Function to get the users current positon in longitude
 {
-
+    while(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
+        {
+            gps.encode(gps.read()); //The read function reads the gps's characters while the encode function translates it to actual tangible data
+        }
+    if(gps.location.isUpdated() && gps.location.isValid())  
+    {
+        double currentLng = gps.location.lng(); //Obtains the users current longitude based off the gps's location
+    }
+    //The isUpdated method checks to make sure the gps is updated to the users current location. 
+    //The isValid method checks to make sure the the gps is able to find a satelite to read off of.
+    
+    return currentLng; //Returns the current longitude of the user
 }
 
-double compareLatitude(double latitude) //Function to compare the busRoute distances and find the closest route to the user - returns the closest latitude
+double compareLatitude(double lat) //Function to compare the busRoute distances and find the closest route to the user - returns the closest latitude
 {
     
 }
-double compareLongitude(double longitude) //Function to compare the busRoute distances and find the closest route to the user - returns the closest longitude
+
+double compareLongitude(double lng) //Function to compare the busRoute distances and find the closest route to the user - returns the closest longitude
 {
 
 }
