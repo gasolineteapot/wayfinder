@@ -48,8 +48,9 @@ void setup() //Initialization for the code. Defining Variables
     gpsSerial.begin(115200);
     compassSerial.begin(115200);
     servoSerial.begin(115200);
-    delay(500);//wait
+    delay(500);
 }
+
 //3 serial inputs rx/tx
 void loop() //Main body of the code
 {
