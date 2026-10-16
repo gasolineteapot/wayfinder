@@ -29,11 +29,16 @@ HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
 
 void setup() //Initialization for the code. Defining Variables
 {
+    Serial.begin(115200); //set baud rate
+
+
     
+    delay(500);//wait
 }
 
 void loop() //Main body of the code
 {
-
+    analogRead;
+    delay(1000);//delay for next loop
 }
 
