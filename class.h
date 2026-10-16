@@ -69,5 +69,13 @@ int readBusData()//Function to read the bus data and returns the closest index o
         i++;
     }
     return k;
+
+    int j = 0;
+    while(busRoutes.available() && j <= k)
+        {
+
+        }
+    
 }
+
 
