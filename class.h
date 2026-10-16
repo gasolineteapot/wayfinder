@@ -35,7 +35,7 @@ double getLongitude() //Function to get the users current positon in longitude
 }
 
 
-double readBusData()//Function to read the bus data and returns the closest index of latitude and longitude
+double readBusData()//Function to read the bus data and returns the angle between the user and the nearest bus stop
 {
     File busRoutes = LittleFS.open("/BusStops_Active.csv", "r"); //Defines the file and opens it to read only
     if(!busRoutes) //If there are any problems with reading the file
@@ -64,13 +64,10 @@ double readBusData()//Function to read the bus data and returns the closest inde
         if(dist < closestDistance) //If statement to find the closest distance
         {
             closestDistance = dist; 
-            centralAngle = angleBetweenTwoOnSurface();
+            centralAngle = bearingAngle(userLat, userLng, readLat, readLong, rad_Earth_Boulder); //Function to find the central angle
         }
     }
     return centralAngle;
-
-  
-    
 }
 
 
