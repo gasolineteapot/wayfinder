@@ -38,6 +38,13 @@ SoftwareSerial compassSerial(Compass_RX,Compass_TX);
 SoftwareSerial servoSerial(Servo_RX,Servo_TX);
 void setup() //Initialization for the code. Defining Variables
 {
+    pinMode(GPS_RX,INPUT);
+    pinMode(GPS_TX,OUTPUT);
+    pinMode(Compass_RX,INPUT);
+    pinMode(Compass_TX,OUTPUT);
+    pinMode(Servo_RX,INPUT);
+    pinMode(Servo_TX,OUTPUT);
+    
     gpsSerial.begin(115200);
     compassSerial.begin(115200);
     servoSerial.begin(115200);
