@@ -35,7 +35,7 @@ double getLongitude() //Function to get the users current positon in longitude
 }
 
 
-int readBusData()//Function to read the bus data and returns the closest index of latitude and longitude
+double readBusData()//Function to read the bus data and returns the closest index of latitude and longitude
 {
     File busRoutes = LittleFS.open("/BusStops_Active.csv", "r"); //Defines the file and opens it to read only
     if(!busRoutes) //If there are any problems with reading the file
@@ -44,12 +44,12 @@ int readBusData()//Function to read the bus data and returns the closest index o
         return; //Exit safely
     }
 
-    int i = 0; //Integer to count the number of loops the code reads through
-    int k = 0; //Integer to assign the index of the closest latitude and longitude
     double dist = 0.0; //Declaration of the distance
     double userLat = getLatitude(); //From the previous function - gets the users latitude
     double userLng = getLongitude(); //From the previous function - gets the users longitude
     double closestDistance = INT_MAX; //Value to compare the distance
+    double centralAngle = 0.0; //Value for the central angle to know which way the servo rotates
+    const double rad_Earth_Boulder = 6370964.362946211; //Value for the radius of the earth
     while(busRoutes.available()) //While the file is open and being read - continuously reads the file until there is nothing left to read
     {
         String lineLat = busRoutes.readStringUntil(","); //Reads the line for latitude until there is a comma seperating them
@@ -64,18 +64,12 @@ int readBusData()//Function to read the bus data and returns the closest index o
         if(dist < closestDistance) //If statement to find the closest distance
         {
             closestDistance = dist; 
-            k = i;
+            centralAngle = angleBetweenTwoOnSurface();
         }
-        i++;
     }
-    return k;
+    return centralAngle;
 
-    int j = 0;
-    const double rad_Earth_Boulder = 6370964.362946211;
-    while(busRoutes.available() && j <= k)
-        {
-            
-        }
+  
     
 }
 
