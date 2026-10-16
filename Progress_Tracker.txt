@@ -17,3 +17,4 @@ Hunter(main + class) - Switched lots of functions over to the class file and fix
 
 10/16/2026
 Hunter(class) updated the function that reads bus route data and made it return the central angle
+Killian(header/main) - Serial input/output for various modules
