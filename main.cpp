@@ -26,19 +26,29 @@
 
 TinyGPSPlus gps; //Initializes and defines the gps
 HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
+#define GPS_RX = 13;
+#define GPS_TX = 12;
+#define Compass_RX = 11;
+#define Compass_TX = 10;
+#define Servo_RX = 9;
+#define Servo_TX = 8;
 
+SoftwareSerial gpsSerial(GPS_RX,GPS_TX);
+SoftwareSerial compassSerial(Compass_RX,Compass_TX);
+SoftwareSerial servoSerial(Servo_RX,Servo_TX);
 void setup() //Initialization for the code. Defining Variables
 {
-    Serial.begin(115200); //set baud rate
-
-
-    
+    gpsSerial.begin(115200);
+    compassSerial.begin(115200);
+    servoSerial.begin(115200);
     delay(500);//wait
 }
-
+//3 serial inputs rx/tx
 void loop() //Main body of the code
 {
-    analogRead;
+    if(Serial1.available()>0) {
+        char incomingByte = Serial1.read();
+    }
     delay(1000);//delay for next loop
 }
 
