@@ -52,7 +52,7 @@ double centralAngleBetweenLat(double lat1, double lon1, double lat2, double lon2
     return dLat;
 }
 
-double angleBetweenTwoOnSurface(double latUser, double lonUser, double latStop, double lonStop, double radius) //Imagining the central angle projecting dX and dY onto the surface of a sphere as a triangle, this is the upper angle near the dY side 
+double bearingAngle(double latUser, double lonUser, double latStop, double lonStop, double radius) //Imagining the central angle projecting dX and dY onto the surface of a sphere as a triangle, this is the upper angle near the dY side 
 {
     //angle is from lat1/lon1 to lat2/lon2 
     dLat = degreeToRad(latUser-latStop); //change in angle from lat to lat
