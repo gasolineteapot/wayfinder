@@ -48,7 +48,7 @@ double readBusData()//Function to read the bus data and returns the angle betwee
     double userLat = getLatitude(); //From the previous function - gets the users latitude
     double userLng = getLongitude(); //From the previous function - gets the users longitude
     double closestDistance = INT_MAX; //Value to compare the distance
-    double centralAngle = 0.0; //Value for the central angle to know which way the servo rotates
+    double bearing = 0.0; //Value for the central angle to know which way the servo rotates
     const double rad_Earth_Boulder = 6370964.362946211; //Value for the radius of the earth
     while(busRoutes.available()) //While the file is open and being read - continuously reads the file until there is nothing left to read
     {
@@ -64,10 +64,10 @@ double readBusData()//Function to read the bus data and returns the angle betwee
         if(dist < closestDistance) //If statement to find the closest distance
         {
             closestDistance = dist; 
-            centralAngle = bearingAngle(userLat, userLng, readLat, readLong, rad_Earth_Boulder); //Function to find the central angle
+            bearing = bearingAngle(userLat, userLng, readLat, readLong, rad_Earth_Boulder); //Function to find the central angle
         }
     }
-    return centralAngle;
+    return bearing;
 }
 
 
