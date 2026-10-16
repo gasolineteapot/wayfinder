@@ -1,4 +1,7 @@
 
+TinyGPSPlus gps; //Initializes and defines the gps
+HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
+
 double getLatitude() //Function to get the users current position in latitude
 {
     while(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
