@@ -71,9 +71,10 @@ int readBusData()//Function to read the bus data and returns the closest index o
     return k;
 
     int j = 0;
+    const double rad_Earth_Boulder = 6370964.362946211;
     while(busRoutes.available() && j <= k)
         {
-
+            
         }
     
 }
