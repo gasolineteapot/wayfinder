@@ -14,3 +14,6 @@ Hunter(main) - Started functions to compare the latitude and longitude of the us
 
 10/09/2026
 Hunter(main + class) - Switched lots of functions over to the class file and fixed up how the code will read the bus data and what it will return. Clarified many functions and tweaked many functions.
+
+10/16/2026
+Hunter(class) updated the function that reads bus route data and made it return the central angle
