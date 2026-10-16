@@ -25,38 +25,33 @@
 
 
 TinyGPSPlus gps; //Initializes and defines the gps
-HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
-#define GPS_RX = 13;
-#define GPS_TX = 12;
-#define Compass_RX = 11;
-#define Compass_TX = 10;
-#define Servo_RX = 9;
-#define Servo_TX = 8;
+TinyGPSPlus gps; //Initializes and defines the gps
 
-SoftwareSerial gpsSerial(GPS_RX,GPS_TX);
-SoftwareSerial compassSerial(Compass_RX,Compass_TX);
-SoftwareSerial servoSerial(Servo_RX,Servo_TX);
+#define GPS_RX 13
+#define GPS_TX 12
+#define Compass_RX = 11
+#define Compass_TX = 10
+#define Servo_RX = 9
+#define Servo_TX = 8
 void setup() //Initialization for the code. Defining Variables
 {
-    pinMode(GPS_RX,INPUT);
-    pinMode(GPS_TX,OUTPUT);
-    pinMode(Compass_RX,INPUT);
-    pinMode(Compass_TX,OUTPUT);
-    pinMode(Servo_RX,INPUT);
-    pinMode(Servo_TX,OUTPUT);
-    
-    gpsSerial.begin(115200);
-    compassSerial.begin(115200);
-    servoSerial.begin(115200);
+    Serial.begin(115200,SERIAL_8N1,GPS_RX,GPS_TX)
+    Serial1.begin(115200,SERIAL_8N1,Compass_RX,Compass_TX);
+    Serial2.begin(115200,SERIAL_8N1,Servo_RX,Servo_TX);
     delay(500);
 }
 
 //3 serial inputs rx/tx
 void loop() //Main body of the code
-{
+{   
+    if(Serial.available()>0) {
+        char GPSByte = Serial.read();
+    }
     if(Serial1.available()>0) {
-        char incomingByte = Serial1.read();
+        char compassByte = Serial1.read();
+    }
+    if(Serial2.available()>0) {
+        char servoByte = Serial2.read();
     }
     delay(1000);//delay for next loop
 }
-
