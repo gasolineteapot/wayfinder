@@ -35,7 +35,7 @@ TinyGPSPlus gps; //Initializes and defines the gps
 #define Servo_TX 8
 void setup() //Initialization for the code. Defining Variables
 {
-    Serial.begin(115200,SERIAL_8N1,GPS_RX,GPS_TX)
+    Serial.begin(115200,SERIAL_8N1,GPS_RX,GPS_TX);
     Serial1.begin(115200,SERIAL_8N1,Compass_RX,Compass_TX);
     Serial2.begin(115200,SERIAL_8N1,Servo_RX,Servo_TX);
     delay(500);
