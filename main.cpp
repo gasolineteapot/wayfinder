@@ -44,13 +44,16 @@ void setup() //Initialization for the code. Defining Variables
 //3 serial inputs rx/tx
 void loop() //Main body of the code
 {   
-    if(Serial.available()>0) {
+    if(Serial.available()>0) 
+    {
         char GPSByte = Serial.read();
     }
-    if(Serial1.available()>0) {
+    if(Serial1.available()>0) 
+    {
         char compassByte = Serial1.read();
     }
-    if(Serial2.available()>0) {
+    if(Serial2.available()>0) 
+    {
         char servoByte = Serial2.read();
     }
     delay(1000);//delay for next loop
