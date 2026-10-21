@@ -57,5 +57,14 @@ double bearingAngle(double latUser, double lonUser, double latStop, double lonSt
     //angle is from lat1/lon1 to lat2/lon2 
     double dLat = degreeToRad(latUser-latStop); //change in angle from lat to lat
     double dLon = degreeToRad(lonUser-lonStop); //change in angle from lon to lon
-    return std::atan((std::sin(dLat)*radius)/(std::sin(dLon)*radius)); 
+    if(std::sin(dLon) != 0){
+        return std::atan((std::sin(dLat))/(std::sin(dLon))); 
+    }
+    else if(std::sin(dLat) != 0){
+        return std::acot(((std::sin(dLon)/std::sin(dLat))));
+    }
+    else{
+        console.log("At Dest");
+        return 0;
+    }
 }
