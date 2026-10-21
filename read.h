@@ -2,38 +2,36 @@
 TinyGPSPlus gps; //Initializes and defines the gps
 HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
 
-double getLatitude() //Function to get the users current position in latitude
+void updateGPS() //Function that updates the GPS
 {
-    double currentLat = 0.0;
-    while(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
+ while(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
         {
             gps.encode(gpsSerial.read()); //The read function reads the gps's characters while the encode function translates it to actual tangible data
         }
-    if(gps.location.isUpdated() && gps.location.isValid())  
+}
+
+double getLatitude() //Function to get the users current position in latitude
+{
+    if(gps.location.isValid())  //Checks to make sure that there is a satelite to use
     {
-        currentLat = gps.location.lat(); //Obtains the users current latitude based off the gps's location
+        return gps.location.lat(); //Obtains the users current latitude based off the gps's location
     }
-    //The isUpdated method checks to make sure the gps is updated to the users current location. 
-    //The isValid method checks to make sure the the gps is able to find a satelite to read off of.
-    
-    return currentLat; //Returns the current latitude of the user
+    else
+    {
+        return 0.0 //If no satelite is found
+    } 
 }
 
 double getLongitude() //Function to get the users current positon in longitude
 {
-    double currentLng = 0.0;
-    while(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
-        {
-            gps.encode(gpsSerial.read()); //The read function reads the gps's characters while the encode function translates it to actual tangible data
-        }
-    if(gps.location.isUpdated() && gps.location.isValid())  
+    if(gps.location.isUpdated()) 
     {
-        currentLng = gps.location.lng(); //Obtains the users current longitude based off the gps's location
+        return gps.location.lng(); //Obtains the users current longitude based off the gps's location
     }
-    //The isUpdated method checks to make sure the gps is updated to the users current location. 
-    //The isValid method checks to make sure the the gps is able to find a satelite to read off of.
-    
-    return currentLng; //Returns the current longitude of the user
+    else
+    {
+        return 0.0;
+    }
 }
 
 
