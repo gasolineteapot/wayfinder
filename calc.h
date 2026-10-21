@@ -51,6 +51,16 @@ double centralAngleBetweenLat(double lat1, double lon1, double lat2, double lon2
     double dLat = std::acos(std::cos(lat1)*std::cos(lat2)+std::sin(lat1)*std::sin(lat2)*std::cos(lon1-lon2)); //lat
     return dLat;
 }
+//Functions for Wayfinder
+double degreeToRad(double degree) //Convert Degrees to Radians
+{ 
+    return degree * M_PI / 180.0;
+}
+
+double radToDegree(double rad) //Convert Radian to Degrees
+{ 
+    return rad * 180.0 / M_PI;
+}
 
 double bearingAngle(double latUser, double lonUser, double latStop, double lonStop) //Imagining the central angle projecting dX and dY onto the surface of a sphere as a triangle, this is the upper angle near the dY side 
 {
@@ -58,13 +68,13 @@ double bearingAngle(double latUser, double lonUser, double latStop, double lonSt
     double dLat = degreeToRad(latUser-latStop); //change in angle from lat to lat
     double dLon = degreeToRad(lonUser-lonStop); //change in angle from lon to lon
     if(std::sin(dLon) != 0){
-        return std::atan((std::sin(dLat))/(std::sin(dLon))); 
+        return std::atan((std::sin(dLat))/(std::sin(dLon))); //Get angle from user to stop
     }
     else if(std::sin(dLat) != 0){
-        return std::acot(((std::sin(dLon)/std::sin(dLat))));
+        return 2*M_PI - std::atan(((std::sin(dLon)/std::sin(dLat)))); //This is equal to arccot of 1/x, equal to prev but prevents errors
     }
     else{
-        console.log("At Dest");
         return 0;
     }
 }
+
