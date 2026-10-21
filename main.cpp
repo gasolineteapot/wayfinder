@@ -29,10 +29,10 @@ TinyGPSPlus gps; //Initializes and defines the gps
 
 #define GPS_RX 13
 #define GPS_TX 12
-#define Compass_RX = 11
-#define Compass_TX = 10
-#define Servo_RX = 9
-#define Servo_TX = 8
+#define Compass_RX 11
+#define Compass_TX 10
+#define Servo_RX 9
+#define Servo_TX 8
 void setup() //Initialization for the code. Defining Variables
 {
     Serial.begin(115200,SERIAL_8N1,GPS_RX,GPS_TX)
