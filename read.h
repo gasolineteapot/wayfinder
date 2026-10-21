@@ -64,7 +64,7 @@ double readBusData()//Function to read the bus data and returns the angle betwee
         if(dist < closestDistance) //If statement to find the closest distance
         {
             closestDistance = dist; 
-            bearing = bearingAngle(userLat, userLng, readLat, readLong, rad_Earth_Boulder); //Function to find the central angle
+            bearing = bearingAngle(userLat, userLng, readLat, readLong); //Function to find the central angle
         }
     }
     return bearing;
