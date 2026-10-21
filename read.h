@@ -4,7 +4,7 @@ HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
 
 void updateGPS() //Function that updates the GPS
 {
- while(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
+    while(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
         {
             gps.encode(gpsSerial.read()); //The read function reads the gps's characters while the encode function translates it to actual tangible data
         }
