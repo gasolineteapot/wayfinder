@@ -28,6 +28,7 @@
 TinyGPSPlus gps; //Initializes and defines the gps
 TinyGPSPlus gps; //Initializes and defines the gps
 
+//-------------------------Main-------------------------
 const byte GPS_RX = 13;
 const byte GPS_TX = 12;
 const byte Compass_RX = 11;
@@ -55,15 +56,15 @@ void loop() //Main body of the code
 {   
     if(GPSSerial.available()>0) 
     {
-        GPSByte = Serial.read();
+        GPSByte = GPSSerial.read();
     }
     if(CompassSerial.available()>0) 
     {
-        compassByte = Serial1.read();
+        compassByte = CompassSerial.read();
     }
     if(ServoSerial.available()>0) 
     {
-        servoByte = Serial2.read();
+        servoByte = ServoSerial.read();
     }
     delay(1000);//delay for next loop
 }
