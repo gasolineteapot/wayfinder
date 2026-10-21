@@ -4,13 +4,14 @@ HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
 
 double getLatitude() //Function to get the users current position in latitude
 {
+    double currentLat = 0;
     while(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
         {
             gps.encode(gpsSerial.read()); //The read function reads the gps's characters while the encode function translates it to actual tangible data
         }
     if(gps.location.isUpdated() && gps.location.isValid())  
     {
-        double currentLat = gps.location.lat(); //Obtains the users current latitude based off the gps's location
+        currentLat = gps.location.lat(); //Obtains the users current latitude based off the gps's location
     }
     //The isUpdated method checks to make sure the gps is updated to the users current location. 
     //The isValid method checks to make sure the the gps is able to find a satelite to read off of.
@@ -20,13 +21,14 @@ double getLatitude() //Function to get the users current position in latitude
 
 double getLongitude() //Function to get the users current positon in longitude
 {
+    double currentLng = 0;
     while(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
         {
             gps.encode(gpsSerial.read()); //The read function reads the gps's characters while the encode function translates it to actual tangible data
         }
     if(gps.location.isUpdated() && gps.location.isValid())  
     {
-        double currentLng = gps.location.lng(); //Obtains the users current longitude based off the gps's location
+        currentLng = gps.location.lng(); //Obtains the users current longitude based off the gps's location
     }
     //The isUpdated method checks to make sure the gps is updated to the users current location. 
     //The isValid method checks to make sure the the gps is able to find a satelite to read off of.
