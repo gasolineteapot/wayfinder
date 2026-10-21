@@ -34,26 +34,36 @@ const byte Compass_RX = 11;
 const byte Compass_TX = 10;
 const byte Servo_RX = 9;
 const byte Servo_TX = 8;
+
+SoftwareSerial GPSSerial = (GPS_RX,GPS_TX);
+SoftwareSerial CompassSerial = (Compass_RX, Compass_TX);
+SoftwareSerial ServoSerial = (Servo_RX, Servo_TX);
+
+char GPSByte;
+char compassByte;
+char servoByte;
 void setup() //Initialization for the code. Defining Variables
-{    
-    So
+{   
+    GPSSerial.begin(9600);
+    CompassSerial.begin(9600);
+    ServoSerial.begin(9600);
     delay(500);
 }
 
 //3 serial inputs rx/tx
 void loop() //Main body of the code
 {   
-    if(Serial.available()>0) 
+    if(GPSSerial.available()>0) 
     {
-        char GPSByte = Serial.read();
+        GPSByte = Serial.read();
     }
-    if(Serial1.available()>0) 
+    if(CompassSerial.available()>0) 
     {
-        char compassByte = Serial1.read();
+        compassByte = Serial1.read();
     }
-    if(Serial2.available()>0) 
+    if(ServoSerial.available()>0) 
     {
-        char servoByte = Serial2.read();
+        servoByte = Serial2.read();
     }
     delay(1000);//delay for next loop
 }
