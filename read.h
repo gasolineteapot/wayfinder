@@ -18,7 +18,7 @@ double getLatitude() //Function to get the users current position in latitude
     }
     else
     {
-        return 0.0 //If no satelite is found
+        return 0.0; //If no satelite is found
     } 
 }
 
@@ -52,7 +52,7 @@ double readBusData()//Function to read the bus data and returns the angle betwee
     const double rad_Earth_Boulder = 6370964.362946211; //Value for the radius of the earth
     while(busRoutes.available()) //While the file is open and being read - continuously reads the file until there is nothing left to read
     {
-        String lineLat = busRoutes.readStringUntil(","); //Reads the line for latitude until there is a comma seperating them
+        String lineLat = busRoutes.readStringUntil(','); //Reads the line for latitude until there is a comma char seperating them
         String lineLong = busRoutes.readStringUntil('\n'); //Reads the line for longitude until there is a line break seperating them
         lineLat.trim(); //Removes any unecessary white space
         lineLong.trim(); //Removes any unecessary white space
