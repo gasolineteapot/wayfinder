@@ -4,7 +4,7 @@ HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
 
 double getLatitude() //Function to get the users current position in latitude
 {
-    double currentLat = 0;
+    double currentLat = 0.0;
     while(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
         {
             gps.encode(gpsSerial.read()); //The read function reads the gps's characters while the encode function translates it to actual tangible data
@@ -21,7 +21,7 @@ double getLatitude() //Function to get the users current position in latitude
 
 double getLongitude() //Function to get the users current positon in longitude
 {
-    double currentLng = 0;
+    double currentLng = 0.0;
     while(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
         {
             gps.encode(gpsSerial.read()); //The read function reads the gps's characters while the encode function translates it to actual tangible data
