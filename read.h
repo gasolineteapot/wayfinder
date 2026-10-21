@@ -43,7 +43,7 @@ double readBusData()//Function to read the bus data and returns the angle betwee
     if(!busRoutes) //If there are any problems with reading the file
     {
         Serial.println("Failed to retrieve file contents"); 
-        return; //Exit safely
+        return -1.0; //Exit safely
     }
 
     double dist = 0.0; //Declaration of the distance
