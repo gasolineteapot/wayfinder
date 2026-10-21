@@ -1,8 +1,8 @@
 //-------------------------Libraries-------------------------
 #include <iostream> //Main setup
 #include <cmath> //Math library for calculations
-#include "header.h" //Including a header
-#include "class.h" //Class definitions
+#include "calc.h" //Including a header
+#include "read.h" //Class definitions
 #include "FS.h" //Basic file inclusion library
 //Compass Libraries
 #include <Adafruit_BNO055.h> //Library for the main compass. It recieves vectors from the compass of the direction relative to absolute north
