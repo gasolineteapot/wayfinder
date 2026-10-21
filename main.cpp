@@ -10,6 +10,7 @@
 #include <Wire.h> //ESP-32 Library to handle communication
 //GPS Libraries
 #include <TinyGPS++.h> //Library for the main GPS - Processes latitude, longitude, and all the math
+#include <SoftwareSerial.h> //Emulates serial ports for serial conections
 #include <HardwareSerial.h> //Establishes communication between the GPS and the ESP32
 //Servo Libraries
 #include <ESP32Servo.h> //Provides angle control for the servo motor
@@ -27,17 +28,15 @@
 TinyGPSPlus gps; //Initializes and defines the gps
 TinyGPSPlus gps; //Initializes and defines the gps
 
-#define GPS_RX 13
-#define GPS_TX 12
-#define Compass_RX 11
-#define Compass_TX 10
-#define Servo_RX 9
-#define Servo_TX 8
+const byte GPS_RX = 13;
+const byte GPS_TX = 12;
+const byte Compass_RX = 11;
+const byte Compass_TX = 10;
+const byte Servo_RX = 9;
+const byte Servo_TX = 8;
 void setup() //Initialization for the code. Defining Variables
-{
-    Serial.begin(115200,SERIAL_8N1,GPS_RX,GPS_TX);
-    Serial1.begin(115200,SERIAL_8N1,Compass_RX,Compass_TX);
-    Serial2.begin(115200,SERIAL_8N1,Servo_RX,Servo_TX);
+{    
+    So
     delay(500);
 }
 
