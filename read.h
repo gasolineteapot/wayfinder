@@ -1,15 +1,4 @@
 
-TinyGPSPlus gps; //Initializes and defines the gps
-HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
-
-void updateGPS() //Function that updates the GPS
-{
-    while(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
-        {
-            gps.encode(gpsSerial.read()); //The read function reads the gps's characters while the encode function translates it to actual tangible data
-        }
-}
-
 double getLatitude() //Function to get the users current position in latitude
 {
     if(gps.location.isValid())  //Checks to make sure that there is a satelite to use
@@ -64,7 +53,7 @@ double readBusData()//Function to read the bus data and returns the angle betwee
         if(dist < closestDistance) //If statement to find the closest distance
         {
             closestDistance = dist; 
-            bearing = bearingAngle(userLat, userLng, readLat, readLong); //Function to find the central angle
+            bearing = radToDegree(bearingAngle(userLat, userLng, readLat, readLong)); //Function to find the central angle
         }
     }
     return bearing;
