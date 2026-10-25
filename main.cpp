@@ -28,12 +28,12 @@
 
 TinyGPSPlus gps; //Initializes and defines the gps
 HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
-
+  
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
 Servo pointerServo;
 int servoPin = 13; 
-
+int servoAngle;
 
 void setup() {
   Serial.begin(9600); // Initialize Serial Monitor at 9600 bps
@@ -59,7 +59,6 @@ void loop(void)
   sensors_event_t event; 
   bno.getEvent(&event);
   
-  int servoAngle;
 
     if (event.orientation.x >= 290.0 && event.orientation.x <= 360.0)
     {
@@ -72,10 +71,10 @@ void loop(void)
         pointerServo.write(constrain(servoAngle, 60, 120));
     }
     else{
-        pointerServo.write(constrain(servoAngle, 60, 120));
+        pointerServo.write(servoAngle);
     }
 
   Serial.println(event.orientation.x);
   
-  delay(100);
+  delay(50);
 }
