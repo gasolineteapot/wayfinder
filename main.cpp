@@ -28,43 +28,71 @@
 TinyGPSPlus gps; //Initializes and defines the gps
 HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
 
-const byte GPS_RX = 13;
-const byte GPS_TX = 12;
-const byte Compass_RX = 11;
-const byte Compass_TX = 10;
-const byte Servo_RX = 9;
-const byte Servo_TX = 8;
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BNO055.h>
+#include <utility/imumaths.h>
+#include <ESP32Servo.h>
+#include <SoftwareSerial.h>
+  
+Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
-SoftwareSerial GPSSerial = (GPS_RX,GPS_TX);
-SoftwareSerial CompassSerial = (Compass_RX, Compass_TX);
-SoftwareSerial ServoSerial = (Servo_RX, Servo_TX);
+Servo pointerServo;
+int servoPin = 13; 
 
-char GPSByte;
-char compassByte;
-char servoByte;
-void setup() //Initialization for the code. Defining Variables
-{   
-    GPSSerial.begin(9600);
-    CompassSerial.begin(9600);
-    ServoSerial.begin(9600);
-    delay(500);
+// Define RX and TX pins for SoftwareSerial
+SoftwareSerial gpsSerial(10, 11); // RX = Pin 10, TX = Pin 11
+
+
+void setup() {
+  Serial.begin(9600); // Initialize Serial Monitor at 9600 bps
+  gpsSerial.begin(9600); // Initialize GPS module at 9600 bps
+
+  Serial.println("ATGM336H GPS Module Test");
+  Serial.println("Orientation Sensor Test"); Serial.println("");
+
+  pointerServo.attach(servoPin);
+
+  /* Initialise the sensor */
+  if(!bno.begin())
+  {
+    /* There was a problem detecting the BNO055 ... check your connections */
+    Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+    while(1);
+  }
+  
+  delay(1000);
+    
+  bno.setExtCrystalUse(true);
 }
 
-//3 serial inputs rx/tx
-void loop() //Main body of the code
-{   
-    if(gpsSerial.available() > 0) //Reads the serial output from the GPS and looks for new characters
-        {
-            gps.encode(gpsSerial.read()); //The read function reads the gps's characters while the encode function translates it to actual tangible data
-        }
-    if(CompassSerial.available()>0) 
-        {
-            compassByte = CompassSerial.read();
-        }
-    
-    if(ServoSerial.available()>0) 
-        {
-            Serial.write();
-        }
-    delay(1000);//delay for next loop
+void loop(void) 
+{
+  char c;
+  if (gpsSerial.available()) {
+    c = gpsSerial.read(); 
+  }
+  /* Get a new sensor event */ 
+  sensors_event_t event; 
+  bno.getEvent(&event);
+  
+  int servoAngle = (float)(C - '0');
+
+    if (event.orientation.x >= 280.0 && event.orientation.x <= 360.0)
+    {
+        servoAngle = (int)(event.orientation.x - 280.0);
+        pointerServo.write(constrain(servoAngle, 0, 80));
+    }
+    else if (event.orientation.x >= 0.0 && event.orientation.x <= 80.0)
+    {
+        servoAngle = (int)(event.orientation.x + 80.0);
+        pointerServo.write(constrain(servoAngle, 80, 160));
+    }
+    else{
+        pointerServo.write(constrain(servoAngle, 80, 160));
+    }
+
+  Serial.println(event.orientation.x);
+  
+  delay(100);
 }
