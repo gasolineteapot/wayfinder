@@ -20,7 +20,8 @@
 //Output and Control Libraries
 #include <driver/ledc.h> //Generates tones for the pizzo buzzer
 #include <Arduino.h> //Basic Arduino Library for all the arduino commands
-
+#include <utility/imumaths.h> //for compass
+#include <ESP32Servo.h>//servo library for esp32
 
 //-------------------------Main-------------------------
 
@@ -28,28 +29,14 @@
 TinyGPSPlus gps; //Initializes and defines the gps
 HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
 
-#include <Wire.h>
-#include <Adafruit_Sensor.h>
-#include <Adafruit_BNO055.h>
-#include <utility/imumaths.h>
-#include <ESP32Servo.h>
-#include <SoftwareSerial.h>
-  
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
 Servo pointerServo;
 int servoPin = 13; 
 
-// Define RX and TX pins for SoftwareSerial
-SoftwareSerial gpsSerial(10, 11); // RX = Pin 10, TX = Pin 11
-
 
 void setup() {
   Serial.begin(9600); // Initialize Serial Monitor at 9600 bps
-  gpsSerial.begin(9600); // Initialize GPS module at 9600 bps
-
-  Serial.println("ATGM336H GPS Module Test");
-  Serial.println("Orientation Sensor Test"); Serial.println("");
 
   pointerServo.attach(servoPin);
 
@@ -68,28 +55,24 @@ void setup() {
 
 void loop(void) 
 {
-  char c;
-  if (gpsSerial.available()) {
-    c = gpsSerial.read(); 
-  }
   /* Get a new sensor event */ 
   sensors_event_t event; 
   bno.getEvent(&event);
   
-  int servoAngle = (float)(C - '0');
+  int servoAngle;
 
-    if (event.orientation.x >= 280.0 && event.orientation.x <= 360.0)
+    if (event.orientation.x >= 290.0 && event.orientation.x <= 360.0)
     {
-        servoAngle = (int)(event.orientation.x - 280.0);
-        pointerServo.write(constrain(servoAngle, 0, 80));
+        servoAngle = (int)(event.orientation.x - 290.0);
+        pointerServo.write(constrain(servoAngle, 0, 60));
     }
-    else if (event.orientation.x >= 0.0 && event.orientation.x <= 80.0)
+    else if (event.orientation.x >= 0.0 && event.orientation.x <= 70.0)
     {
-        servoAngle = (int)(event.orientation.x + 80.0);
-        pointerServo.write(constrain(servoAngle, 80, 160));
+        servoAngle = (int)(event.orientation.x + 60.0);
+        pointerServo.write(constrain(servoAngle, 60, 120));
     }
     else{
-        pointerServo.write(constrain(servoAngle, 80, 160));
+        pointerServo.write(constrain(servoAngle, 60, 120));
     }
 
   Serial.println(event.orientation.x);
