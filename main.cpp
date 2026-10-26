@@ -30,51 +30,75 @@ TinyGPSPlus gps; //Initializes and defines the gps
 HardwareSerial gpsSerial(2); //Initializes the serial output for the gps
   
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
-
 Servo pointerServo;
-int servoPin = 13; 
-int servoAngle;
+
+const int servoPin = 13;
+
+// Tracking position and timing
+float currentServoAngle = 0.0; 
+float lastHeading = 0.0;
+unsigned long lastTime = 0;
 
 void setup() {
-  Serial.begin(9600); // Initialize Serial Monitor at 9600 bps
-
+  Serial.begin(9600);
   pointerServo.attach(servoPin);
 
-  /* Initialise the sensor */
-  if(!bno.begin())
-  {
-    /* There was a problem detecting the BNO055 ... check your connections */
+  if(!bno.begin()) {
     Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
     while(1);
   }
-  
   delay(1000);
-    
   bno.setExtCrystalUse(true);
+
+  // Initialize starting positions
+  sensors_event_t event;
+  bno.getEvent(&event);
+  lastHeading = event.orientation.x;
+  lastTime = millis();
 }
 
-void loop(void) 
-{
-  /* Get a new sensor event */ 
-  sensors_event_t event; 
+void loop(void) {
+  sensors_event_t event;
   bno.getEvent(&event);
+  float currentHeading = event.orientation.x;
+  unsigned long currentTime = millis();
   
-
-    if (event.orientation.x >= 290.0 && event.orientation.x <= 360.0)
-    {
-        servoAngle = (int)(event.orientation.x - 290.0);
-        pointerServo.write(constrain(servoAngle, 0, 60));
-    }
-    else if (event.orientation.x >= 0.0 && event.orientation.x <= 70.0)
-    {
-        servoAngle = (int)(event.orientation.x + 60.0);
-        pointerServo.write(constrain(servoAngle, 60, 120));
-    }
-    else{
-        pointerServo.write(servoAngle);
-    }
-
-  Serial.println(event.orientation.x);
+  // Calculate time elapsed in seconds
+  float deltaTime = (currentTime - lastTime) / 1000.0;
   
-  delay(50);
+  if (deltaTime > 0.0) {
+    // 1. Calculate change in heading (handling the 0/360 wrap safely)
+    float headingDiff = currentHeading - lastHeading;
+    if (headingDiff > 180.0) {
+      headingDiff -= 360.0;
+    } else if (headingDiff < -180.0) {
+      headingDiff += 360.0;
+    }
+
+    // 2. Compass Angular Velocity (degrees per second)
+    float compassVelocity = headingDiff / deltaTime;
+
+    // 3. Servo Angular Velocity scaled to 1/3 of the compass speed
+    float servoVelocity = compassVelocity / 3.0;
+
+    // 4. Update the servo's absolute position based on its new velocity
+    currentServoAngle += servoVelocity * deltaTime;
+
+    // 5. Constrain the servo safely within your physical limits (0 to 120)
+    currentServoAngle = constrain(currentServoAngle, 0.0, 120.0);
+
+    // Write the final angle to the servo
+    pointerServo.write((int)currentServoAngle);
+
+    // Debugging tracking
+    Serial.print("Comp Vel: "); Serial.print(compassVelocity);
+    Serial.print(" | Servo Vel: "); Serial.print(servoVelocity);
+    Serial.print(" | Servo Pos: "); Serial.println(currentServoAngle);
+  }
+
+  // Save values for the next loop iteration
+  lastHeading = currentHeading;
+  lastTime = currentTime;
+
+  delay(20); // Faster sample rate ensures velocity tracking stays tight
 }
