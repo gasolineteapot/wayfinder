@@ -51,16 +51,6 @@ double centralAngleBetweenLat(double lat1, double lon1, double lat2, double lon2
     double dLat = std::acos(std::cos(lat1)*std::cos(lat2)+std::sin(lat1)*std::sin(lat2)*std::cos(lon1-lon2)); //lat
     return dLat;
 }
-//Functions for Wayfinder
-double degreeToRad(double degree) //Convert Degrees to Radians
-{ 
-    return degree * M_PI / 180.0;
-}
-
-double radToDegree(double rad) //Convert Radian to Degrees
-{ 
-    return rad * 180.0 / M_PI;
-}
 
 double bearingAngle(double latUser, double lonUser, double latStop, double lonStop) 
 {
