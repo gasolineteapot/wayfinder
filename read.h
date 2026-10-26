@@ -13,32 +13,41 @@ double getLatitude() //Function to get the users current position in latitude
 
 double getLongitude() //Function to get the users current positon in longitude
 {
-    if(gps.location.isUpdated()) 
+    if(gps.location.isValid()) 
     {
         return gps.location.lng(); //Obtains the users current longitude based off the gps's location
     }
     else
     {
-        return 0.0;
+        return 0.0; //If no satelite is found
     }
 }
 
 
 double readBusData()//Function to read the bus data and returns the angle between the user and the nearest bus stop
 {
-    File busRoutes = LittleFS.open("/BusStops_Active.csv", "r"); //Defines the file and opens it to read only
-    if(!busRoutes) //If there are any problems with reading the file
-    {
-        Serial.println("Failed to retrieve file contents"); 
-        return -1.0; //Exit safely
-    }
 
+        
     double dist = 0.0; //Declaration of the distance
     double userLat = getLatitude(); //From the previous function - gets the users latitude
     double userLng = getLongitude(); //From the previous function - gets the users longitude
     double closestDistance = INT_MAX; //Value to compare the distance
     double bearing = 0.0; //Value for the central angle to know which way the servo rotates
     const double rad_Earth_Boulder = 6370964.362946211; //Value for the radius of the earth
+    
+    File busRoutes = LittleFS.open("/BusStops_Active.csv", "r"); //Defines the file and opens it to read only
+    
+    if (userLat == 0.0 && userLng == 0.0) {
+        Serial.println("GPS fix not available yet.");
+        return -1.0; 
+    }
+
+    if(!busRoutes) //If there are any problems with reading the file
+    {
+        Serial.println("Failed to retrieve file contents"); 
+        return -1.0; //Exit safely
+    }
+    
     while(busRoutes.available()) //While the file is open and being read - continuously reads the file until there is nothing left to read
     {
         String lineLat = busRoutes.readStringUntil(','); //Reads the line for latitude until there is a comma char seperating them
