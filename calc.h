@@ -62,19 +62,26 @@ double radToDegree(double rad) //Convert Radian to Degrees
     return rad * 180.0 / M_PI;
 }
 
-double bearingAngle(double latUser, double lonUser, double latStop, double lonStop) //Imagining the central angle projecting dX and dY onto the surface of a sphere as a triangle, this is the upper angle near the dY side 
+double bearingAngle(double latUser, double lonUser, double latStop, double lonStop) 
 {
-    //angle is from lat1/lon1 to lat2/lon2 
-    double dLat = degreeToRad(latUser-latStop); //change in angle from lat to lat
-    double dLon = degreeToRad(lonUser-lonStop); //change in angle from lon to lon
-    if(std::sin(dLon) != 0){
-        return std::atan((std::sin(dLat))/(std::sin(dLon))); //Get angle from user to stop
+    // Convert all inputs to radians
+    latUser = degreeToRad(latUser);
+    lonUser = degreeToRad(lonUser);
+    latStop = degreeToRad(latStop);
+    lonStop = degreeToRad(lonStop);
+
+    double dLon = lonStop - lonUser; // Destination minus Origin
+
+    double x = std::cos(latStop) * std::sin(dLon);
+    double y = std::cos(latUser) * std::sin(latStop) - 
+               std::sin(latUser) * std::cos(latStop) * std::cos(dLon);
+
+    double bearing = std::atan2(x, y);
+    
+    // Normalize to 0 to 2*M_PI radians (0 to 360 degrees) if desired
+    if (bearing < 0) {
+        bearing += 2.0 * M_PI;
     }
-    else if(std::sin(dLat) != 0){
-        return 2*M_PI - std::atan(((std::sin(dLon)/std::sin(dLat)))); //This is equal to arccot of 1/x, equal to prev but prevents errors
-    }
-    else{
-        return 0;
-    }
+    return bearing; 
 }
 
