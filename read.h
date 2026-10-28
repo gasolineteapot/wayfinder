@@ -31,40 +31,24 @@ double readBusData()//Function to read the bus data and returns the angle betwee
     double dist = 0.0; //Declaration of the distance
     double userLat = getLatitude(); //From the previous function - gets the users latitude
     double userLng = getLongitude(); //From the previous function - gets the users longitude
+    double busLat = 0.0; //Initializes the bus stop latitude
+    double busLng = 0.0; //Initializes the bus stop longitude
     double closestDistance = INT_MAX; //Value to compare the distance
     double bearing = 0.0; //Value for the central angle to know which way the servo rotates
     const double rad_Earth_Boulder = 6370964.362946211; //Value for the radius of the earth
     
     File busRoutes = LittleFS.open("/BusStops_Active.csv", "r"); //Defines the file and opens it to read only
     
-    if (userLat == 0.0 && userLng == 0.0) {
+    if (userLat == 0.0 && userLng == 0.0) 
+    {
         Serial.println("GPS fix not available yet.");
         return -1.0; 
     }
 
-    if(!busRoutes) //If there are any problems with reading the file
-    {
-        Serial.println("Failed to retrieve file contents"); 
-        return -1.0; //Exit safely
-    }
-    
-    while(busRoutes.available()) //While the file is open and being read - continuously reads the file until there is nothing left to read
-    {
-        String lineLat = busRoutes.readStringUntil(','); //Reads the line for latitude until there is a comma char seperating them
-        String lineLong = busRoutes.readStringUntil('\n'); //Reads the line for longitude until there is a line break seperating them
-        lineLat.trim(); //Removes any unecessary white space
-        lineLong.trim(); //Removes any unecessary white space
-
-        double readLat = lineLat.toDouble(); //Converts the latitude (which was originaly a string) to a double
-        double readLong = lineLong.toDouble(); //Converts the longitude (which was originally a string) to a double
-
-        double dist = haversineDistance(userLat, userLng, readLat, readLong); //Calculates the absolute distance between the two points
-        if(dist < closestDistance) //If statement to find the closest distance
+    for(int i = 0; i <= sizeof(busStops); i++)
         {
-            closestDistance = dist; 
-            bearing = radToDegree(bearingAngle(userLat, userLng, readLat, readLong)); //Function to find the central angle
+            
         }
-    }
     return bearing;
 }
 
