@@ -1,16 +1,21 @@
-//useful constants for program
-const double rad_Earth_Boulder = 6370964.362946211;
+#ifndef NAV_UTILS_H
+#define NAV_UTILS_H
 
+#include <Arduino.h>
 
-//Functions for Wayfinder
-double degreeToRad(double degree) //Convert Degrees to Radians
+// Useful constants for program
+const double RAD_EARTH_BOULDER = 6370964.362946211; // Earth radius in Boulder meters
+
+// Convert Degrees to Radians
+inline double degreeToRad(double degree) 
 { 
-    return degree * M_PI / 180.0;
+    return degree * PI / 180.0;
 }
 
-double radToDegree(double rad) //Convert Radian to Degrees
+// Convert Radians to Degrees
+inline double radToDegree(double rad) 
 { 
-    return rad * 180.0 / M_PI;
+    return rad * 180.0 / PI;
 }
 
 double haversineDistance(double lat1, double lon1, double lat2, double lon2) //Calculate distance on a sphere from point (lat1,lon1) to (lat2,lon2) using Haversine formula 
@@ -23,10 +28,10 @@ double haversineDistance(double lat1, double lon1, double lat2, double lon2) //C
     lat1 = degreeToRad(lat1);
     lat2 = degreeToRad(lat2);
 
-    double a = std::sin(dLat / 2.0) * std::sin(dLat / 2.0) + std::cos(lat1) * std::cos(lat2) * std::sin(dLon / 2.0) * std::sin(dLon / 2.0);
-    double c = 2.0 * std::atan2(std::sqrt(a), std::sqrt(1.0 - a));
+    double a = sin(dLat / 2.0) * sin(dLat / 2.0) + cos(lat1) * cos(lat2) * sin(dLon / 2.0) * sin(dLon / 2.0);
+    double c = 2.0 * atan2(sqrt(a), sqrt(1.0 - a));
     
-    return std::abs(rad_Earth_Boulder * c);
+    return abs(rad_Earth_Boulder * c);
 }
 
 double centralAngleBetweenLon(double lat1, double lon1, double lat2, double lon2) //Longitude of angle from one position(lat1,lon1) to another(lat2,lon2) on a sphere
@@ -35,7 +40,7 @@ double centralAngleBetweenLon(double lat1, double lon1, double lat2, double lon2
     lon1 = degreeToRad(lon1);
     lon2 = degreeToRad(lon2);
     
-    double dLon = std::abs(lon1-lon2); //lon
+    double dLon = abs(lon1-lon2); //lon
 
     return dLon;
 }
@@ -48,30 +53,32 @@ double centralAngleBetweenLat(double lat1, double lon1, double lat2, double lon2
     lon1 = degreeToRad(lon1);
     lon2 = degreeToRad(lon2);
     
-    double dLat = std::acos(std::cos(lat1)*std::cos(lat2)+std::sin(lat1)*std::sin(lat2)*std::cos(lon1-lon2)); //lat
+    double dLat = acos(cos(lat1) * cos(lat2) + sin(lat1) * sin(lat2) * cos(lon1-lon2)); //lat
     return dLat;
 }
 
-double bearingAngle(double latUser, double lonUser, double latStop, double lonStop) 
+// Calculate bearing angle between user and destination (returns radians from 0 to 2*PI)
+inline double bearingAngle(double latUser, double lonUser, double latStop, double lonStop) 
 {
     // Convert all inputs to radians
-    latUser = degreeToRad(latUser);
-    lonUser = degreeToRad(lonUser);
-    latStop = degreeToRad(latStop);
-    lonStop = degreeToRad(lonStop);
+    double newlatUser = degreeToRad(latUser);
+    double newlonUser = degreeToRad(lonUser);
+    double newlatStop = degreeToRad(latStop);
+    double newlonStop = degreeToRad(lonStop);
 
-    double dLon = lonStop - lonUser; // Destination minus Origin
+    double dLon = newlonStop - newlonUser; // Destination minus Origin
 
-    double x = std::cos(latStop) * std::sin(dLon);
-    double y = std::cos(latUser) * std::sin(latStop) - 
-               std::sin(latUser) * std::cos(latStop) * std::cos(dLon);
+    double x = cos(newlatStop) * sin(dLon);
+    double y = cos(newlatUser) * sin(newlatStop) - 
+               sin(newlatUser) * cos(newlatStop) * cos(dLon);
 
-    double bearing = std::atan2(x, y);
+    double bearing = atan2(x, y);
     
-    // Normalize to 0 to 2*M_PI radians (0 to 360 degrees) if desired
+    // Normalize to 0 to 2*PI radians
     if (bearing < 0) {
-        bearing += 2.0 * M_PI;
+        bearing += 2.0 * PI;
     }
     return bearing; 
 }
 
+#endif // NAV_UTILS_H
