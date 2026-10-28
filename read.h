@@ -37,8 +37,6 @@ double readBusData()//Function to read the bus data and returns the angle betwee
     double bearing = 0.0; //Value for the central angle to know which way the servo rotates
     const double rad_Earth_Boulder = 6370964.362946211; //Value for the radius of the earth
     
-    File busRoutes = LittleFS.open("/BusStops_Active.csv", "r"); //Defines the file and opens it to read only
-    
     if (userLat == 0.0 && userLng == 0.0) 
     {
         Serial.println("GPS fix not available yet.");
@@ -46,9 +44,13 @@ double readBusData()//Function to read the bus data and returns the angle betwee
     }
 
     for(int i = 0; i <= sizeof(busStops); i++)
-        {
-            dist = haversineDistance(userLat, userLng, busLat, busLng);
-        }
+    {
+        dist = haversineDistance(userLat, userLng, busLat, busLng);
+    }
+    if(dist < closestDistance)
+    {
+        closestDistance = dist;
+    }
     return bearing;
 }
 
