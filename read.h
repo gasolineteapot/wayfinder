@@ -47,7 +47,7 @@ double readBusData()//Function to read the bus data and returns the angle betwee
 
     for(int i = 0; i <= sizeof(busStops); i++)
         {
-            
+            dist = haversindistance()
         }
     return bearing;
 }
