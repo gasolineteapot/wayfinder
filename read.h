@@ -45,11 +45,14 @@ double readBusData()//Function to read the bus data and returns the angle betwee
 
     for(int i = 0; i <= sizeof(busStops); i++)
     {
+        busLat = busStops[i].lat,6;
+        busLng = busStops[i].lng,6;
         dist = haversineDistance(userLat, userLng, busLat, busLng);
-    }
-    if(dist < closestDistance)
-    {
-        closestDistance = dist;
+        if(dist < closestDistance)
+        {
+            closestDistance = dist;
+            bearing = bearingAngle(userLat, userLng, busLat, busLng);
+        }
     }
     return bearing;
 }
