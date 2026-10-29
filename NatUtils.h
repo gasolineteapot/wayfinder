@@ -1,8 +1,3 @@
-#ifndef NAV_UTILS_H
-#define NAV_UTILS_H
-
-#include <Arduino.h>
-
 // Useful constants for program
 const double RAD_EARTH_BOULDER = 6370964.362946211; // Earth radius in Boulder meters
 
@@ -31,7 +26,7 @@ double haversineDistance(double lat1, double lon1, double lat2, double lon2) //C
     double a = sin(dLat / 2.0) * sin(dLat / 2.0) + cos(lat1) * cos(lat2) * sin(dLon / 2.0) * sin(dLon / 2.0);
     double c = 2.0 * atan2(sqrt(a), sqrt(1.0 - a));
     
-    return abs(rad_Earth_Boulder * c);
+    return abs(RAD_EARTH_BOULDER * c);
 }
 
 double centralAngleBetweenLon(double lat1, double lon1, double lat2, double lon2) //Longitude of angle from one position(lat1,lon1) to another(lat2,lon2) on a sphere
@@ -80,5 +75,3 @@ inline double bearingAngle(double latUser, double lonUser, double latStop, doubl
     }
     return bearing; 
 }
-
-#endif // NAV_UTILS_H
