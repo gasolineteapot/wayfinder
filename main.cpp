@@ -10,7 +10,7 @@
 #include <WiFi.h>
 #include <climits>
 #include <esp_bt.h>
-#include "calc.h"
+#include "NavUtils.h"
 #include "read.h"
 #include "buzzer.h"
 
@@ -26,7 +26,12 @@ const float servoMin = 20.0;
 const float servoMax = 140.0;
 const float servoRange = 120.0;
 const float gearRatio = 3.0;
+
 float targetServoAngle = 80.0;
+double busLat = 0.0;
+double busLng = 0.0;
+double userLat = 0.0;
+double userLng = 0.0;
 
 const int buzzerPin = 12;
 
@@ -88,8 +93,14 @@ void loop() {
     if (gps.location.isValid()) {
       goodTone(buzzerPin);
       //servo angles to bus stopeth
-      targetServoAngle = readBusData(gps);
+      userLat = gps.location.lat();
+      userLng = gps.location.lng();
 
+      targetServoAngle = readBusData(&userLat, &userLng, &busLat, &busLng);
+      
+      proximityTone(buzzerPin, haversineDistance(userLat, userLng, busLat, busLng));
+      
+      
       Serial.print("LATITUDE: ");   Serial.println(gps.location.lat(), 6);
       Serial.print("LONGITUDE: ");  Serial.println(gps.location.lng(), 6);
       Serial.print("SATELLITES: "); Serial.println(gps.satellites.value());
