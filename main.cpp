@@ -96,8 +96,17 @@ void loop() {
       userLat = gps.location.lat();
       userLng = gps.location.lng();
 
-      targetServoAngle = readBusData(&userLat, &userLng, &busLat, &busLng);
-      
+      targetServoAngle = radToDegree(readBusData(&userLat, &userLng, &busLat, &busLng));
+      Serial.print(userLat,10);
+      Serial.print(" ");
+      Serial.print(userLng,10);
+      Serial.print(" ");
+      Serial.print(busLat,10);
+      Serial.print(" ");
+      Serial.print(busLng,10);
+      Serial.print(" ");
+      Serial.print(targetServoAngle);
+      Serial.print("\n");
       proximityTone(buzzerPin, haversineDistance(userLat, userLng, busLat, busLng));
       
       
