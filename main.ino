@@ -6,11 +6,11 @@
 #include <ESP32Servo.h>
 #include <HardwareSerial.h>
 #include <LittleFS.h>
-#include <TinyGPS++.h>
 #include <WiFi.h>
+#include <TinyGPS++.h>
 #include <climits>
 #include <esp_bt.h>
-#include "NavUtils.h"
+#include "NatUtils.h"
 #include "read.h"
 #include "buzzer.h"
 
@@ -32,6 +32,8 @@ double busLat = 0.0;
 double busLng = 0.0;
 double userLat = 0.0;
 double userLng = 0.0;
+unsigned long startMillis = 0.0;
+unsigned long dMillis = 0.0;
 
 const int buzzerPin = 12;
 
@@ -75,6 +77,7 @@ void setup() {
 }
 
 void loop() {
+  startMillis = millis();
   // Feed incoming characters from the GPS module into the TinyGPS++ parser
   // (Crucial: Must run continuously without delay blocks to avoid serial buffer overflow)
   while (GPSSerial.available() > 0) {
@@ -107,7 +110,7 @@ void loop() {
       Serial.print(" ");
       Serial.print(targetServoAngle);
       Serial.print("\n");
-      proximityTone(buzzerPin, haversineDistance(userLat, userLng, busLat, busLng));
+      proximityTone(buzzerPin, haversineDistance(userLat, userLng, busLat, busLng), &dMillis);
       
       
       Serial.print("LATITUDE: ");   Serial.println(gps.location.lat(), 6);
@@ -121,7 +124,7 @@ void loop() {
     // Hardware Failure Check
     if (gps.charsProcessed() < 10) {
       Serial.println("ERROR: No GPS data received. Check RX/TX wiring pins!");
-      badTone(buzzerPin);
+      //badTone(buzzerPin);
     }
     
     Serial.println("---------------------------------------");
@@ -167,4 +170,5 @@ void loop() {
     Serial.print(" | Servo target: ");
     Serial.println(targetAngle);
   }
+  dMillis += millis() - startMillis;
 }
